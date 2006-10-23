@@ -8,12 +8,12 @@
 Summary:	Libsyncml - an implementation of the SyncML protocol
 Summary(pl):	Libsyncml - implementacja protoko³u SyncML
 Name:		libsyncml
-Version:	0.4.0
-Release:	0.1
+Version:	0.4.1
+Release:	1
 License:	LGPL
 Group:		Libraries
 Source0:	http://libsyncml.opensync.org/attachment/wiki/download/%{name}-%{version}.tar.gz?format=raw
-# Source0-md5:	a6b5becd4b61e246ed2ee95db9f6e746
+# Source0-md5:	7a9261dd4d2a6049f064f16054af3187
 URL:		http://libsyncml.opensync.org/
 BuildRequires:	wbxml2-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -60,6 +60,8 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog NEWS README
 %attr(755,root,root) %{_bindir}/syncml*
 %attr(755,root,root) %{_libdir}/libsyncml.so.*.*.*
+%{_mandir}/man1/syncml-http-server.1*
+%{_mandir}/man1/syncml-obex-client.1*
 
 %files devel
 %defattr(644,root,root,755)
