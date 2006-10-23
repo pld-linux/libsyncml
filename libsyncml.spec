@@ -1,3 +1,10 @@
+# TODO
+# The transports are:
+#  Http Client:            Disabled
+#  Http Server:            Disabled
+#  Obex Client:            Disabled
+#  Obex Server:            Disabled
+#  Bluetooth:              Enabled
 Summary:	Libsyncml - an implementation of the SyncML protocol
 Summary(pl):	Libsyncml - implementacja protoko³u SyncML
 Name:		libsyncml
