@@ -1,10 +1,3 @@
-# TODO
-# The transports are:
-#  Http Client:            Disabled
-#  Http Server:            Disabled
-#  Obex Client:            Disabled
-#  Obex Server:            Disabled
-#  Bluetooth:              Enabled
 Summary:	Libsyncml - an implementation of the SyncML protocol
 Summary(pl):	Libsyncml - implementacja protoko³u SyncML
 Name:		libsyncml
@@ -15,6 +8,10 @@ Group:		Libraries
 Source0:	http://libsyncml.opensync.org/attachment/wiki/download/%{name}-%{version}.tar.gz?format=raw
 # Source0-md5:	7a9261dd4d2a6049f064f16054af3187
 URL:		http://libsyncml.opensync.org/
+BuildRequires:	check
+BuildRequires:	libsoup-devel
+BuildRequires:	libxml2-devel
+BuildRequires:	openobex-devel >= 1.3
 BuildRequires:	wbxml2-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,7 +37,14 @@ Pliki nag³ówkowe biblioteki libsyncml.
 %setup -q
 
 %build
-%configure
+%configure \
+  --enable-http \
+  --enable-obex \
+  --enable-bluetooth \
+  --enable-tools \
+  --enable-unit-tests \
+  --enable-tracing \
+
 %{__make}
 
 %install
