@@ -1,5 +1,5 @@
 Summary:	Libsyncml - an implementation of the SyncML protocol
-Summary(pl.UTF-8):   Libsyncml - implementacja protokołu SyncML
+Summary(pl.UTF-8):	Libsyncml - implementacja protokołu SyncML
 Name:		libsyncml
 Version:	0.4.1
 Release:	3
@@ -23,7 +23,7 @@ Libsyncml jest implementacją protokołu SyncML.
 
 %package devel
 Summary:	Header files for libsyncml library
-Summary(pl.UTF-8):   Pliki nagłówkowe biblioteki libsyncml
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libsyncml
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
