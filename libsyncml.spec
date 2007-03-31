@@ -12,7 +12,7 @@ BuildRequires:	check
 BuildRequires:	libsoup-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	openobex-devel >= 1.3
-BuildRequires:	wbxml2-devel
+BuildRequires:	wbxml2-devel >= 0.9.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
