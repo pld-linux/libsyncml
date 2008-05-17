@@ -1,16 +1,19 @@
 Summary:	Libsyncml - an implementation of the SyncML protocol
 Summary(pl.UTF-8):	Libsyncml - implementacja protokołu SyncML
 Name:		libsyncml
-Version:	0.4.4
-Release:	3
+Version:	0.4.6
+Release:	0.1
 License:	LGPL
 Group:		Libraries
-Source0:	http://libsyncml.opensync.org/attachment/wiki/download/%{name}-%{version}.tar.bz2?format=raw
-# Source0-md5:	192f42dc0a17e43edf5f893f1ca7fa5b
+Source0:	http://libsyncml.opensync.org/download/releases/0.4.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	d524b18c1eafe5805f83e29c01a91b66
 URL:		http://libsyncml.opensync.org/
 BuildRequires:	check
 BuildRequires:	libsoup-devel
 BuildRequires:	libxml2-devel
+BuildRequires:	libtool
+BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(macros) >= 1.385
 BuildRequires:	openobex-devel >= 1.3
 BuildRequires:	wbxml2-devel >= 0.9.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -37,13 +40,12 @@ Pliki nagłówkowe biblioteki libsyncml.
 %setup -q
 
 %build
-%configure \
-  --enable-http \
-  --enable-obex \
-  --enable-bluetooth \
-  --enable-tools \
-  --enable-unit-tests \
-  --enable-tracing \
+%cmake \
+	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
+%if "%{_lib}" != "lib"
+	-DLIB_SUFFIX=64 \
+%endif
+	.
 
 %{__make}
 
