@@ -40,12 +40,14 @@ Pliki nagłówkowe biblioteki libsyncml.
 %setup -q
 
 %build
+install -d build
+cd build
 %cmake \
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
 %if "%{_lib}" != "lib"
 	-DLIB_SUFFIX=64 \
 %endif
-	.
+	../
 
 %{__make}
 
