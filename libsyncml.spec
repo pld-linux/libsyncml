@@ -10,11 +10,11 @@ Source0:	http://libsyncml.opensync.org/download/releases/0.4.6/%{name}-%{version
 URL:		http://libsyncml.opensync.org/
 BuildRequires:	check
 BuildRequires:	libsoup-devel
-BuildRequires:	libxml2-devel
 BuildRequires:	libtool
+BuildRequires:	libxml2-devel
+BuildRequires:	openobex-devel >= 1.3
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.385
-BuildRequires:	openobex-devel >= 1.3
 BuildRequires:	wbxml2-devel >= 0.9.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -65,15 +65,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/syncml*
 %attr(755,root,root) %{_libdir}/libsyncml.so.*.*.*
-%{_mandir}/man1/syncml-http-server.1*
-%{_mandir}/man1/syncml-obex-client.1*
+%attr(755,root,root) %ghost %{_libdir}/libsyncml.so.?
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libsyncml.so
-%{_libdir}/libsyncml.la
+%{_libdir}/libsyncml.so
 %{_includedir}/libsyncml-1.0
 %{_pkgconfigdir}/libsyncml-1.0.pc
