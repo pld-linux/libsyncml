@@ -1,6 +1,5 @@
 # TODO
 # -- obex over tcp transports                     OFF
-# -- WAP Binary XML                               OFF
 Summary:	Libsyncml - an implementation of the SyncML protocol
 Summary(pl.UTF-8):	Libsyncml - implementacja protokołu SyncML
 Name:		libsyncml
@@ -16,13 +15,13 @@ BuildRequires:	check
 BuildRequires:	cmake
 BuildRequires:	glib2-devel >= 1:2.12
 BuildRequires:	libsoup-devel >= 2.2.91
+BuildRequires:	libwbxml-devel >= 0.10.0
 BuildRequires:	libxml2-devel
 BuildRequires:	openobex-devel >= 1.3
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.385
-#-- checking for one of the modules 'libwbxml2>=0.10.0'
-#BuildRequires:	wbxml2-devel >= 0.10.0
-BuildRequires:	wbxml2-devel >= 0.9.2
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
 %description
 Libsyncml is a implementation of the SyncML protocol.
 
