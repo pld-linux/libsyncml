@@ -1,14 +1,12 @@
-# TODO
-# -- obex over tcp transports                     OFF
 Summary:	Libsyncml - an implementation of the SyncML protocol
 Summary(pl.UTF-8):	Libsyncml - implementacja protokołu SyncML
 Name:		libsyncml
-Version:	0.5.1
+Version:	0.5.4
 Release:	1
 License:	LGPL 2.1+
 Group:		Libraries
-Source0:	http://libsyncml.opensync.org/download/releases/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	b4c80239c94619090c96944820873b16
+Source0:	https://downloads.sourceforge.net/project/libsyncml/libsyncml/%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	b8ce1f222cccc12acdcd6807d65c1aea
 URL:		http://libsyncml.opensync.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	check
@@ -46,12 +44,12 @@ Pliki nagłówkowe biblioteki libsyncml.
 %build
 install -d build
 cd build
-%cmake \
+%cmake .. \
+	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
 	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
-%if "%{_lib}" != "lib"
-	-DLIB_SUFFIX=64 \
+%if "%{_lib}" == "lib64"
+	-DLIB_SUFFIX=64
 %endif
-	../
 
 %{__make}
 
@@ -72,7 +70,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README
 %attr(755,root,root) %{_bindir}/syncml*
 %attr(755,root,root) %{_libdir}/libsyncml.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libsyncml.so.?
+%attr(755,root,root) %ghost %{_libdir}/libsyncml.so.2
 
 %files devel
 %defattr(644,root,root,755)
