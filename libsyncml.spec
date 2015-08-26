@@ -7,6 +7,7 @@ License:	LGPL 2.1+
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/project/libsyncml/libsyncml/%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	b8ce1f222cccc12acdcd6807d65c1aea
+Patch0:		wbxml.patch
 URL:		http://libsyncml.opensync.org/
 BuildRequires:	bluez-libs-devel
 BuildRequires:	check
@@ -40,16 +41,12 @@ Pliki nagłówkowe biblioteki libsyncml.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 install -d build
 cd build
-%cmake .. \
-	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
-	-DCMAKE_INSTALL_PREFIX=%{_prefix} \
-%if "%{_lib}" == "lib64"
-	-DLIB_SUFFIX=64
-%endif
+%cmake ../
 
 %{__make}
 

@@ -1,0 +1,11 @@
+--- libsyncml-0.5.4/libsyncml/parser/sml_wbxml_internals.h~	2009-06-04 18:16:56.000000000 +0900
++++ libsyncml-0.5.4/libsyncml/parser/sml_wbxml_internals.h	2015-08-26 23:01:34.743734099 +0900
+@@ -29,7 +29,7 @@
+ #ifndef _SML_WBXML_INTERNALS_H_
+ #define _SML_WBXML_INTERNALS_H_
+ 
+-#include <wbxml.h>
++#include <wbxml/wbxml.h>
+ 
+ SmlBool smlWbxmlConvertTo(WBXMLConvXML2WBXMLParams *params, const char *input, char **output, size_t *outputLen, SmlError** error);
+ SmlBool smlWbxmlConvertFrom(WBXMLConvWBXML2XMLParams *params, const char *input, size_t inputLen, char **output, size_t *outputLen, SmlError** error);
