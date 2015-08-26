@@ -2,7 +2,7 @@ Summary:	Libsyncml - an implementation of the SyncML protocol
 Summary(pl.UTF-8):	Libsyncml - implementacja protokołu SyncML
 Name:		libsyncml
 Version:	0.5.4
-Release:	1
+Release:	2
 License:	LGPL 2.1+
 Group:		Libraries
 Source0:	https://downloads.sourceforge.net/project/libsyncml/libsyncml/%{version}/%{name}-%{version}.tar.bz2
