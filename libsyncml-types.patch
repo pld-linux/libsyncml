@@ -1,0 +1,20 @@
+--- libsyncml-0.5.4/libsyncml/parser/sml_wbxml.c.orig	2009-06-04 11:16:56.000000000 +0200
++++ libsyncml-0.5.4/libsyncml/parser/sml_wbxml.c	2025-09-06 21:23:12.075274343 +0200
+@@ -135,7 +135,7 @@ error:
+ 	return NULL;
+ }
+ 
+-SmlBool smlWbxmlAssemblerRun(SmlXmlAssembler *assm, char **data, unsigned int *size, SmlBool *end, SmlBool final, unsigned int maxsize, SmlError **error)
++SmlBool smlWbxmlAssemblerRun(SmlXmlAssembler *assm, char **data, size_t *size, SmlBool *end, SmlBool final, unsigned int maxsize, SmlError **error)
+ {
+ 	smlTrace(TRACE_ENTRY, "%s(%p, %p, %p, %p, %i, %i, %p)", __func__, assm, data, size, end, final, maxsize, error);
+ 	CHECK_ERROR_REF
+@@ -178,7 +178,7 @@ unsigned int smlWbxmlAssemblerCheckSize(
+ 	CHECK_ERROR_REF
+ 	smlAssert(assm);
+ 	
+-	unsigned int size = 0;
++	size_t size = 0;
+ 	char *data = NULL;
+ 	char *buffer = NULL;
+ 	unsigned int buffer_size = 0;

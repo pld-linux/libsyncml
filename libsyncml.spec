@@ -9,6 +9,7 @@ Source0:	https://downloads.sourceforge.net/libsyncml/%{name}-%{version}.tar.bz2
 # Source0-md5:	b8ce1f222cccc12acdcd6807d65c1aea
 Patch0:		wbxml.patch
 Patch1:		%{name}-openobex.patch
+Patch2:		%{name}-types.patch
 # dead
 #URL:		http://libsyncml.opensync.org/
 BuildRequires:	bluez-libs-devel
@@ -17,7 +18,7 @@ BuildRequires:	glib2-devel >= 1:2.12
 BuildRequires:	libsoup-devel >= 2.2.91
 BuildRequires:	libwbxml-devel >= 0.10.0
 BuildRequires:	libxml2-devel
-BuildRequires:	openobex-devel >= 1.3
+BuildRequires:	openobex-devel >= 1.6
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.385
 BuildRequires:	sed >= 4.0
@@ -45,6 +46,7 @@ Pliki nagłówkowe biblioteki libsyncml.
 %setup -q
 %patch -P0 -p1
 %patch -P1 -p1
+%patch -P2 -p1
 
 # CHECK_FOUND resets ENABLE_UNIT_TEST to ON
 %{__sed} -i '/FIND_PACKAGE( Check )/d' CMakeLists.txt
