@@ -1,0 +1,81 @@
+--- libsyncml-0.5.4/libsyncml/transports/obex_client.c.orig	2009-06-04 11:16:56.000000000 +0200
++++ libsyncml-0.5.4/libsyncml/transports/obex_client.c	2025-09-06 20:31:42.040412026 +0200
+@@ -716,7 +716,7 @@ static SmlBool smlTransportObexClientSet
+ 			env->obexhandle = OBEX_Init(OBEX_TRANS_BLUETOOTH, smlTransportObexClientEvent, 0);
+ 			break;
+ 		case SML_TRANSPORT_CONNECTION_TYPE_SERIAL:
+-			env->obexhandle = OBEX_Init(OBEX_TRANS_CUST, smlTransportObexClientEvent, 0);	
++			env->obexhandle = OBEX_Init(OBEX_TRANS_CUSTOM, smlTransportObexClientEvent, 0);	
+ 			break;
+ 		case SML_TRANSPORT_CONNECTION_TYPE_USB:
+ 			env->obexhandle = OBEX_Init(OBEX_TRANS_USB, smlTransportObexClientEvent, 0);
+@@ -739,6 +739,7 @@ static SmlBool smlTransportObexClientSet
+ 					smlTransportObexClientCableConnect, 
+ 					smlTransportObexClientCableDisconnect,
+ 					NULL,
++					NULL,
+ 					smlTransportObexClientCableWrite,
+ 					obex_cable_handleinput,
+ 					env};
+@@ -843,7 +844,7 @@ static void smlTransportObexClientConnec
+ 	SmlTransportObexClientEnv *env = data;
+ 	int fd = 0;
+ 	SmlError *error = NULL;
+-	unsigned int obex_intf_cnt;
++	int obex_intf_cnt;
+ 	obex_interface_t *obex_intf;
+ 	env->isDisconnected = FALSE;
+ 	
+@@ -882,22 +883,25 @@ static void smlTransportObexClientConnec
+ 	} else if (env->type == SML_TRANSPORT_CONNECTION_TYPE_USB) {
+ 		smlTrace(TRACE_INTERNAL, "%s: connecting to usb interface %i", __func__, env->port);
+ 		
+-		obex_intf_cnt = OBEX_FindInterfaces(env->obexhandle, &obex_intf);
++		obex_intf_cnt = OBEX_EnumerateInterfaces(env->obexhandle); // , &obex_intf);
+ 		smlTrace(TRACE_INTERNAL, "%s: found %i interfaces", __func__, obex_intf_cnt);
+ 		
+ 		if (obex_intf_cnt <= 0) {
+ 			smlErrorSet(&error, SML_ERROR_GENERIC, "There are no valid USB interfaces.");
+ 			goto error;
+ 		} else if (env->port >= obex_intf_cnt) {
++			OBEX_FreeInterfaces(env->obexhandle);
+ 			smlErrorSet(&error, SML_ERROR_GENERIC, "Unable to find the USB interface number %i", env->port);
+ 			goto error;
+ 		} else {
+-			if (GET_OBEX_RESULT(OBEX_InterfaceConnect(env->obexhandle, &obex_intf[env->port])) < 0) {
++			if (GET_OBEX_RESULT(OBEX_InterfaceConnect(env->obexhandle, OBEX_GetInterfaceByIndex(env->obexhandle, env->port))) < 0) {
++				OBEX_FreeInterfaces(env->obexhandle);
+ 				smlErrorSet(&error, SML_ERROR_GENERIC,
+ 					"The interface cannot be connected. %s (%i).",
+ 					strerror(errno), errno);
+ 				goto error;
+ 			}
++			OBEX_FreeInterfaces(env->obexhandle);
+ 		}
+ 		smlTrace(TRACE_INTERNAL, "%s: usb connect done", __func__);
+ 	} else if (env->type == SML_TRANSPORT_CONNECTION_TYPE_BLUETOOTH) {
+--- libsyncml-0.5.4/tools/syncml-ds-tool.c.orig	2009-06-04 11:16:56.000000000 +0200
++++ libsyncml-0.5.4/tools/syncml-ds-tool.c	2025-09-06 20:40:45.294135634 +0200
+@@ -760,14 +760,17 @@ void list_interfaces()
+ 	if (geteuid() != 0)
+ 		fprintf(stderr, "Superuser privileges are required to access complete USB information.\n");
+ 
+-	interfaces_number = OBEX_FindInterfaces(handle, &obex_intf);
++	interfaces_number = OBEX_EnumerateInterfaces(handle); // , &obex_intf);
+ 	printf("Found %d USB OBEX interfaces\n", interfaces_number);
+ 	
+-	for (i = 0; i < interfaces_number; i++)
++	for (i = 0; i < interfaces_number; i++) {
++		obex_interface_t *obex_intf = OBEX_GetInterfaceByIndex(handle, i);
+ 		printf("Interface %d:\n\tManufacturer: %s\n\tProduct: %s\n\tInterface description: %s\n", i,
+-			obex_intf[i].usb.manufacturer,
+-			obex_intf[i].usb.product,
+-			obex_intf[i].usb.control_interface);
++			obex_intf->usb.manufacturer,
++			obex_intf->usb.product,
++			obex_intf->usb.control_interface);
++	}
++	OBEX_FreeInterfaces(handle);
+ 	
+ 	printf("Use '-u interface_number' to connect\n");
+ 	OBEX_Cleanup(handle);
